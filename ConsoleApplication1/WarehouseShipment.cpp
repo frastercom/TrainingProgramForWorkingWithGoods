@@ -14,72 +14,80 @@ void WarehouseShipment::addProduct(Product product)
 
 void WarehouseShipment::deleteProduct(int idProduct)
 {
-	stack <Product> st1;
 	int size = stWarehouse.size();
+	Product *product = new Product[size];
+	for (int i = size - 1; i >= 0; i--)
+	{
+		product[i] = stWarehouse.top();
+		stWarehouse.pop();
+		
+	}
 	for (int i = 0; i < size; i++)
 	{
 		if (i != idProduct)
 		{
-			st1.push(stWarehouse.top());
-			stWarehouse.pop();
+			stWarehouse.push(product[i]);
 		}
-		else
-		{
-			stWarehouse.pop();
-		}
-	}
-	stWarehouse = st1;
+	}	
 }
 
 void WarehouseShipment::printProduct()
 {
-	stack <Product> st1;
 	int size = stWarehouse.size();
-	for (int i = 0; i < size; i++)
+	Product* product = new Product[size];
+	for (int i = size - 1; i >= 0; i--)
 	{
 		Product p = stWarehouse.top();
-		cout << "id: " << i << "Наименование магазина: " << p.nameShop << "; Наименование продукта: " << p.nameProduct << "; Стоимость: " << p.money << " Номер партии: " << p.count << ";" << endl;
-		st1.push(stWarehouse.top());
+		cout << "id: " << i << "; Наименование магазина: " << p.nameShop << "; Наименование продукта: " << p.nameProduct << "; Стоимость: " << p.money << " Номер партии: " << p.count << ";" << endl;
+		product[i] = p;
 		stWarehouse.pop();
 	}
-	stWarehouse = st1;
+	for (int i = 0; i < size; i++)
+	{
+		stWarehouse.push(product[i]);
+	}
 }
 
 void WarehouseShipment::printProduct(string name)
 {
-	stack <Product> st1;
 	int size = stWarehouse.size();
-	for (int i = 0; i < size; i++)
+	Product* product = new Product[size];
+	for (int i = size - 1; i >= 0; i--)
 	{
 		Product p = stWarehouse.top();
 		if (p.nameProduct == name)
 		{
-			cout << "id: " << i << "Наименование магазина: " << p.nameShop << "; Наименование продукта: " << p.nameProduct << "; Стоимость: " << p.money << " Номер партии: " << p.count << ";" << endl;
+			cout << "id: " << i << "; Наименование магазина: " << p.nameShop << "; Наименование продукта: " << p.nameProduct << "; Стоимость: " << p.money << " Номер партии: " << p.count << ";" << endl;
 		}
-		st1.push(stWarehouse.top());
+		product[i] = p;
 		stWarehouse.pop();
 	}
-	stWarehouse = st1;
+	for (int i = 0; i < size; i++)
+	{
+		stWarehouse.push(product[i]);
+	}
 }
 
 Product WarehouseShipment::getProduct(int count)
 {
-	stack <Product> st1;
 	int size = stWarehouse.size();
+	Product* product = new Product[size];
 	Product sp;
+	for (int i = size - 1; i >= 0; i--)
+	{
+		product[i] = stWarehouse.top();
+		stWarehouse.pop();
+	}
 	for (int i = 0; i < size; i++)
 	{
-		Product p = stWarehouse.top();
-		if (p.count == count)
+		if (product[i].count != count)
 		{
-			sp = p;
+			stWarehouse.push(product[i]);
 		}
 		else
 		{
-			st1.push(stWarehouse.top());
+			sp = product[i];
 		}
-		stWarehouse.pop();
 	}
-	stWarehouse = st1;
 	return sp;
 }
